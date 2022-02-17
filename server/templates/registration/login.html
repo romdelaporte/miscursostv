@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Log In {% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/base.css' %}"> {% endblock %}
+
+{% block content %}
+    <h1>Log In</h1>
+    <div class="module">
+        {% if form.errors %}
+            <p>Tu usuario y contraseña no calzaron. Por favor inténtadol denuevo.</p>
+        {% else %}
+            <p>Por favor utiliza el siguiente formulario para ingresar</p>
+        {% endif %}
+        <div class="login-form">
+            <form action="{% url 'login' %}" method="post">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
+                <p><input type="submit" value="Log-in"></p>
+            </form>
+        </div>
+    </div>
+{% endblock %}
