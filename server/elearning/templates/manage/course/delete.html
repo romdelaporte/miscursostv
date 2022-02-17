@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Borrar Curso {% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/base.css' %}"> {% endblock %}
+
+{% block content %}
+    <h1>Eliminar Curso: "{{ object.title }}"</h1>
+    
+    <div class="module">
+        <form action="" method="post">
+            {% csrf_token %}
+            <p>Confirmas que quieres eliminar "{{ object }}"?</p>
+            <p><input type="submit" value="Confirmar"></p>
+        </form>
+    </div>
+{% endblock %}
