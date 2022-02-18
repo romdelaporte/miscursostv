@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if object %}
+        Editar Contenido: "{{ object.title }}"
+    {% else %}
+        Crear un nuevo contenido
+    {% endif %}
+{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'css/base.css' %}"> {% endblock %}
+
+{% block content %}
+    <h1>
+        {% if object %}
+            Editar contenido: "{{ object.title }}"
+        {% else %}
+            Crear un nuevo contenido
+        {% endif %}
+    </h1>
+    <div class="module">
+        <h2>Información del Curso</h2>
+        <form action="" method="post" enctype="multipart/form-data">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" value="Guardar Contenido"></p>
+        </form>
+    </div>
+{% endblock %}
