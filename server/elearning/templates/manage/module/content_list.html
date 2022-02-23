@@ -3,7 +3,11 @@
 {% load course %}
 
 {% block title %} Módulo {{ module.order|add:1 }}: {{ module.title }} {% endblock %}
-{% block css %}<link rel="stylesheet" href="{% static 'css/base.css' %}"> {% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+{% endblock %}
 
 {% block content %}
     {% with course=module.course %}
@@ -35,7 +39,7 @@
                     {% with item=content.item %}
                     <p>{{ item }} ({{ item|model_name }})</p>
                     <a href="{% url 'module_content_update' module.id item|model_name item.id %}">Editar</a>
-                    <form action="{% url 'module_content_delete' %} content.id>" method="post"
+                    <form action="{% url 'module_content_delete' content.id %}>" method="post">
                         <input type="submit" value="Borrar">
                         {% csrf_token %}
                     </form>
@@ -54,4 +58,55 @@
             </ul>
         </div>
     {% endwith %}
+{% endblock %}
+
+{% block domready %}
+    $('#modules').sortable({
+        stop: function(event, ui){
+            modules_order = {};
+            $('#modules').children().each(function(){
+                // update the order fields
+                $(this).find('.order').text($(this).index() + 1);
+                // associate the module's id with its order
+                modules_order[$(this).data('id')] = $(this).index();
+            });
+            $.ajax({
+                type: 'POST',
+                url: '{% url "module_order" %}',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify(modules_order),
+                success: function () {
+                    console.log('Got the response');
+                },
+                error: function(){
+                    console.log('Error');
+                }
+            });
+        }
+    });
+
+    $('#module-contents').sortable({
+        stop: function(event, ui){
+            contents_order = {};
+            $('#module-contents').children().each(function(){
+                // associate the module's id with its order
+                contents_order[$(this).data('id')] = $(this).index();
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "content_order" %}',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify(contents_order),
+                success: function () {
+                    console.log('Got the response');
+                },
+                error: function(){
+                    console.log('Error');
+                }
+            });
+        }
+    });
 {% endblock %}
