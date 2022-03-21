@@ -5,7 +5,7 @@
     {% if subject %}
         Cursos: {{ subject.title }}
     {% else %}
-        All courses
+        Todos los Cursos
     {% endif %}
 {% endblock %}
 {% block css %}<link rel="stylesheet" href="{% static 'css/base.css' %}"> {% endblock %}
@@ -15,14 +15,14 @@
         {% if subject %}
             Cursos: {{ subject.title }}
         {% else %}
-            All courses
+            Todos los cursos
         {% endif %}
     </h1>
     <div class="contents">
-        <h3>Subjects</h3>
+        <h3>Temas</h3>
         <ul id="modules">
             <li {% if not subject %}class="selected" {% endif %}>
-                <a href="{% url 'course_list' %}">All</a>
+                <a href="{% url 'course_list' %}">Todos</a>
             </li>
             {% for s in subjects %}
                 <li {% if subject == s %}class="selected"{% endif %}>
@@ -43,8 +43,8 @@
                     </a>
                 </h3>
                 <p>
-                    <a href="{% url 'course_list_subject' subject.slug %}">{{ subject }}</a>
-                    {{ course.total_modules }} modules.
+                    <a href="{% url 'course_list_subject' subject.slug %}">Tema: {{ subject }}.</a>
+                    {{ course.total_modules }} módulos.
                     Instructor: {{ course.owner }}
                 </p>
             {% endwith %}
