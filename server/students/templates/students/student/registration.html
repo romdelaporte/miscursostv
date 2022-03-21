@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Registrarse
+{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'css/base.css' %}"> {% endblock %}
+
+
+{% block content %}
+    <h1>Registrarse</h1>
+    <div class="module">
+        <p>Ingresa tus detalles para crear una cuenta</p>
+        <form method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <p><input type="submit" value="Crear cuenta"></p>
+        </form>
+    </div>
+{% endblock %}
