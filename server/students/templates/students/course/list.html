@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Mis Cursos
+{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'css/base.css' %}"> {% endblock %}
+
+
+{% block content %}
+    <h1>Mis Cursos</h1>
+
+    <div class="module">
+        {% for course in object_list %}
+            <div class="course-info">
+                <h3>{{ course.title }}</h3>
+                <p><a href="{% url 'student_course_detail' course.id %}">
+                    Acceder al contenido
+                </a></p>
+            </div>
+        {% empty %}
+            <p>No estás suscrito a ningún curso aún.<a href="{% url 'course_list' %}"> Ver los Cursos</a> para suscribirse.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
