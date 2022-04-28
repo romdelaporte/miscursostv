@@ -7,7 +7,6 @@ env:
   NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx
 
 jobs:
-
   build:
     name: Build Docker Images
     runs-on: ubuntu-latest
@@ -17,6 +16,7 @@ jobs:
       - name: Add environment variables to .env
         run: |
           echo DEBUG=0 >> .env
+          echo ALLOWED_HOSTS=${{ secrets.DJANGO_ALLOWED_HOSTS }} >> .env
           echo SQL_ENGINE=django.db.backends.postgresql >> .env
           echo DATABASE=postgres >> .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
