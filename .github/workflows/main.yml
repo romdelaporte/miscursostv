@@ -85,7 +85,6 @@ jobs:
       # is persisted across job steps
       - name: Print ssh-add identities
         runs: ssh-add -l
-
       - name: Build and deploy images on DigitalOcean
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
