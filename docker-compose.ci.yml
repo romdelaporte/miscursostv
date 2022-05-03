@@ -3,7 +3,7 @@ version: "3.8"
 services:
   web:
     build:
-      context: ./server
+      context: ./web
       dockerfile: Dockerfile.prod
       cache_from:
         - "${WEB_IMAGE}"
